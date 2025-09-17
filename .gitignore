@@ -1,0 +1,17 @@
+﻿# Visual Studio
+.vs/
+*.suo
+*.user
+*.db
+*.cache
+*.pdb
+
+# Build
+bin/
+obj/
+Debug/
+Release/
+
+# Otros
+*.log
+*.vsidx
