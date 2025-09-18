@@ -143,19 +143,19 @@ namespace Coopera.Migrations
                     b.HasOne("Coopera.Models.Partida", "Partida")
                         .WithMany("MiniJuegos")
                         .HasForeignKey("IdPartida")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Coopera.Models.Recurso", "Recursos")
                         .WithMany("MiniJuegos")
                         .HasForeignKey("IdRecurso")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Coopera.Models.Jugador", "Jugador")
                         .WithMany("MiniJuegos")
                         .HasForeignKey("JugadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Jugador");

@@ -20,31 +20,37 @@ namespace Coopera.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relaciones uno a muchos
             modelBuilder.Entity<MiniJuego>()
                 .HasOne(m => m.Recursos)
                 .WithMany(r => r.MiniJuegos)
-                .HasForeignKey(m => m.IdRecurso);
+                .HasForeignKey(m => m.IdRecurso)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MiniJuego>()
                 .HasOne(m => m.Jugador)
                 .WithMany(j => j.MiniJuegos)
-                .HasForeignKey(m => m.JugadorId);
+                .HasForeignKey(m => m.JugadorId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<MiniJuego>()
                 .HasOne(m => m.Partida)
                 .WithMany(p => p.MiniJuegos)
-                .HasForeignKey(m => m.IdPartida);
+                .HasForeignKey(m => m.IdPartida)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Recurso>()
                 .HasOne(r => r.Partida)
                 .WithMany(p => p.Recursos)
-                .HasForeignKey(r => r.PartidaId);
+                .HasForeignKey(r => r.PartidaId)
+                .OnDelete(DeleteBehavior.Cascade); 
 
+            // --- Relaciones Jugador ---
             modelBuilder.Entity<Jugador>()
                 .HasOne(j => j.Partida)
                 .WithMany(p => p.Jugadores)
-                .HasForeignKey(j => j.PartidaId);
+                .HasForeignKey(j => j.PartidaId)
+                .OnDelete(DeleteBehavior.Cascade); 
         }
+
     }
 }

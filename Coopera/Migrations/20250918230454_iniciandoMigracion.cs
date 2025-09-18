@@ -88,19 +88,19 @@ namespace Coopera.Migrations
                         column: x => x.JugadorId,
                         principalTable: "Jugadores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MiniJuegos_Partidas_IdPartida",
                         column: x => x.IdPartida,
                         principalTable: "Partidas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MiniJuegos_Regursos_IdRecurso",
                         column: x => x.IdRecurso,
                         principalTable: "Regursos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
