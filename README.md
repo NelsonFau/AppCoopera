@@ -38,17 +38,6 @@ Clonar el repositorio:
 git clone https://github.com/NelsonFau/AppCoopera.git
 
 
-Coopera/
-│
-├── src/                
-│   ├── juegos/         # Minijuegos individuales
-│   ├── recursos/       # Manejo de recursos (vidas, monedas, objetos)
-│   ├── partidas/       # Guardado y carga de partidas
-│   └── utils/          # Funciones auxiliares
-│
-├── assets/             # Imágenes, sonidos, y otros recursos multimedia
-├── README.md           # Documentación del proyecto
-└── requirements.txt    # Dependencias (si aplica)
 
 Contribución
 
