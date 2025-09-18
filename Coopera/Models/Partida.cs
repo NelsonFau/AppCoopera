@@ -2,16 +2,17 @@
 {
     public class Partida
     {
-        public int IdPartida { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public EstadoPartida Estado { get; set; }
-        Dictionary<Recurso,int> Recursos { get; set; }
-        List<Jugador> Jugadores { get; set; }
+        public List<Recurso> Recursos { get; set; }
+        public List<Jugador> Jugadores { get; set; }
 
-        List<MiniJuego> MiniJuegos { get; set; }
+        public List<MiniJuego> MiniJuegos { get; set; }
 
-
-
+        public DateTime HoraInicio { get; set; }
+        public DateTime HoraFinal { get; set; }
+        
         public enum EstadoPartida
         {
             presentadoResultado ,

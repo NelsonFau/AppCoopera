@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Coopera")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+616c04bced6f2d9fa3a6f8223efd9ba0c76ce987")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fe602610d06c8e4481903dce3e86b87ce5bf649")]
 [assembly: System.Reflection.AssemblyProductAttribute("Coopera")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Coopera")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
