@@ -33,12 +33,12 @@ namespace Coopera.Controllers
                     new Recurso { Nombre = Recurso.RecursosPartida.Piedra, PartidaId = nuevaPartida.Id, Partida = nuevaPartida }
                 };
 
-                return View(recurso); // ✅ Siempre envías una lista
+                return View(recurso);
             }
 
             List<Recurso>? recursos = partida.Recursos;
 
-            return View(recursos); // ✅ Siempre envías una lista
+            return View(recursos); 
         }
 
 

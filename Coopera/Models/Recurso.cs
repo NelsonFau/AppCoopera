@@ -12,9 +12,9 @@ namespace Coopera.Models
         [ForeignKey("Partida")]
         public int PartidaId { get; set; }
 
-        public List<MiniJuego>? MiniJuegos { get; set; }
+        public List<MiniJuego> MiniJuegos { get; set; } = new List<MiniJuego>();
 
-        public Partida? Partida { get; set; }
+        public Partida? Partida { get; set; } 
 
         public enum RecursosPartida
         {
