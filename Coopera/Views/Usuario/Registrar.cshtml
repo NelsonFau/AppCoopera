@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Registrar";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            width: 320px;
+            text-align: center;
+        }
+
+            .form-container input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+
+                .form-container input:focus {
+                    outline: none;
+                    box-shadow: 0 0 8px rgba(255,255,255,0.7);
+                }
+
+        .submit-button {
+            margin-top: 20px;
+            padding: 15px;
+            width: 100%;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(45deg, #ff6b6b, #f06595, #845ef7);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+            .submit-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            }
+    </style>
+</head>
+<body>
+    <h1>Registro de Usuario</h1>
+    <div class="form-container">
+        <form method="post" action="/Usuario/Registrar">
+            <input type="text" name="Nombre" placeholder="Nombre de usuario"  />
+            <button type="submit" class="submit-button">Registrarse</button>
+        </form>
+    </div>
+</body>
+</html>

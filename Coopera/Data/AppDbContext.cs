@@ -44,7 +44,6 @@ namespace Coopera.Data
                 .HasForeignKey(r => r.PartidaId)
                 .OnDelete(DeleteBehavior.Cascade); 
 
-            // --- Relaciones Jugador ---
             modelBuilder.Entity<Jugador>()
                 .HasOne(j => j.Partida)
                 .WithMany(p => p.Jugadores)

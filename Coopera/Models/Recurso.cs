@@ -6,8 +6,8 @@ namespace Coopera.Models
     {
         public int Id { get; set; }
 
-        public string? Nombre { get; set; }
-        public int Cantidad { get; set; }
+        public RecursosPartida Nombre { get; set; }
+        public int Cantidad { get; set; } = 0;
 
         [ForeignKey("Partida")]
         public int PartidaId { get; set; }
@@ -15,5 +15,12 @@ namespace Coopera.Models
         public List<MiniJuego>? MiniJuegos { get; set; }
 
         public Partida? Partida { get; set; }
+
+        public enum RecursosPartida
+        {
+            Madera,
+            Piedra,
+            Comida
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("PartidaId");
 
-                    b.ToTable("Jugadores");
+                    b.ToTable("Jugadores", (string)null);
                 });
 
             modelBuilder.Entity("Coopera.Models.MiniJuego", b =>
@@ -74,7 +74,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("JugadorId");
 
-                    b.ToTable("MiniJuegos");
+                    b.ToTable("MiniJuegos", (string)null);
                 });
 
             modelBuilder.Entity("Coopera.Models.Partida", b =>
@@ -100,7 +100,7 @@ namespace Coopera.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Partidas");
+                    b.ToTable("Partidas", (string)null);
                 });
 
             modelBuilder.Entity("Coopera.Models.Recurso", b =>
@@ -124,7 +124,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("PartidaId");
 
-                    b.ToTable("Regursos");
+                    b.ToTable("Regursos", (string)null);
                 });
 
             modelBuilder.Entity("Coopera.Models.Jugador", b =>
