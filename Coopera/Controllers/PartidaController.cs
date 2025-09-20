@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Coopera.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Coopera.Controllers
 {
@@ -13,25 +14,36 @@ namespace Coopera.Controllers
             _context = context;
         }
         [HttpGet]
-        public ActionResult Index()
+¿        public ActionResult Index()
         {
-            Partida partida = _context.Partidas.FirstOrDefault();
+            Partida? partida = _context.Partidas
+                              .Include(p => p.Recursos)
+                              .Where(p => p.Estado == Partida.EstadoPartida.jugando)
+                              .OrderByDescending(p => p.Id) 
+                              .FirstOrDefault();
+
+
             if (partida == null)
             {
-                partida = new Partida();
-                return View();
-            }
-            if (partida.Estado == Coopera.Models.Partida.EstadoPartida.jugando)
-            {
+                Partida nuevaPartida = new Partida();
+                List<Recurso>? recurso = new List<Recurso>
+                {
+                    new Recurso { Nombre = Recurso.RecursosPartida.Madera, PartidaId = nuevaPartida.Id, Partida = nuevaPartida },
+                    new Recurso { Nombre = Recurso.RecursosPartida.Comida, PartidaId = nuevaPartida.Id, Partida = nuevaPartida },
+                    new Recurso { Nombre = Recurso.RecursosPartida.Piedra, PartidaId = nuevaPartida.Id, Partida = nuevaPartida }
+                };
 
+                return View(recurso); // ✅ Siempre envías una lista
             }
 
-                //List<Recurso> recursos = _context.Regursos.ToList();
-                //return View(recursos);
-                return View();
+            List<Recurso>? recursos = partida.Recursos;
+
+            return View(recursos); // ✅ Siempre envías una lista
         }
 
-         
-     
+
+        //List<Recurso> recursos = _context.Regursos.ToList();
+        //return View(recursos);
+
     }
 }
