@@ -15,33 +15,59 @@ namespace Coopera.Controllers
         }
 
 
-        private (int madera, int piedra, int comida) CalcularMetasTotales(bool esV1, int? seed = null, int totalMax = 100)
+        private (int madera, int piedra, int comida) CalcularMetasTotales(bool esV1, int? semilla = null, int totalMax=100)
         {
-            Random rnd = seed.HasValue ? new Random(seed.Value) : new Random();
+            Random rnd = semilla.HasValue ? new Random(semilla.Value) : new Random();
 
+            // Generar proporciones aleatorias
             double r1 = rnd.NextDouble();
             double r2 = rnd.NextDouble();
             double r3 = rnd.NextDouble();
 
             double suma = r1 + r2 + r3;
 
-            int madera = (int)Math.Round((r1 / suma) * totalMax);
-            int piedra = (int)Math.Round((r2 / suma) * totalMax);
-            int comida = (int)Math.Round((r3 / suma) * totalMax);
+            // Calcular valores iniciales proporcionales
+            int madera = (int)Math.Floor((r1 / suma) * totalMax);
+            int piedra = (int)Math.Floor((r2 / suma) * totalMax);
+            int comida = (int)Math.Floor((r3 / suma) * totalMax);
 
-            int ajuste = (madera + piedra + comida) - totalMax;
-            if (ajuste > 0)
+            // Ajuste para que la suma sea exactamente totalMax
+            int restante = totalMax - (madera + piedra + comida);
+            while (restante > 0)
             {
-                if (madera >= piedra && madera >= comida) madera -= ajuste;
-                else if (piedra >= madera && piedra >= comida) piedra -= ajuste;
-                else comida -= ajuste;
+                // Elegimos aleatoriamente a quién sumar 1 hasta que se termine el restante
+                int opcion = rnd.Next(3);
+                if (opcion == 0) madera++;
+                else if (opcion == 1) piedra++;
+                else comida++;
+                restante--;
             }
 
+            // Aplicar límites mínimos y máximos
             int min = esV1 ? 10 : 1;
             int max = esV1 ? 100 : 10;
+
             madera = Math.Clamp(madera, min, max);
             piedra = Math.Clamp(piedra, min, max);
             comida = Math.Clamp(comida, min, max);
+
+            // Ajuste final si los límites rompieron la suma total
+            int ajusteFinal = totalMax - (madera + piedra + comida);
+            while (ajusteFinal != 0)
+            {
+                if (ajusteFinal > 0)
+                {
+                    if (madera < max) { madera++; ajusteFinal--; }
+                    else if (piedra < max) { piedra++; ajusteFinal--; }
+                    else if (comida < max) { comida++; ajusteFinal--; }
+                }
+                else // ajusteFinal < 0
+                {
+                    if (madera > min) { madera--; ajusteFinal++; }
+                    else if (piedra > min) { piedra--; ajusteFinal++; }
+                    else if (comida > min) { comida--; ajusteFinal++; }
+                }
+            }
 
             return (madera, piedra, comida);
         }
@@ -60,7 +86,7 @@ namespace Coopera.Controllers
             {
                 bool esV1 = version == "V1";
 
-                var (metaMadera, metaPiedra, metaComida) = CalcularMetasTotales(esV1, seed: null, totalMax: 100);
+                var (metaMadera, metaPiedra, metaComida) = CalcularMetasTotales(esV1, semilla: null, totalMax:100);
 
                 Partida nuevaPartida = new Partida
                 {
