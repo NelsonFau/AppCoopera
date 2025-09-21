@@ -12,7 +12,7 @@ namespace Coopera.Controllers
         }
 
         // GET: HomeController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Maqueta(int id)
         {
             return View();
         }

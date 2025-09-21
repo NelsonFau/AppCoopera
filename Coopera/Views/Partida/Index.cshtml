@@ -1,5 +1,6 @@
 ﻿<!doctype html>
 <html lang="es">
+@model Coopera.Models.Partida
 <head>
     <meta charset="utf-8">
     <title>Coop Resources — V1 (números + botones)</title>
@@ -117,68 +118,41 @@
           </div>
 
 
-        <!-- Metas -->
-        <div class="row g-3 mb-3" id="targetsRow">
-            <div class="col-12 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column text-center">
-                        <h5 class="card-title mb-3 text-white">Recurso.Nombre</h5>
+        <!-- Metas -->     
+        <div class="row g-3 mb-3 justify-content-center" id="targetsRow">
+            @foreach (var r in Model.Recursos)
+            {
+                <div class="col-12 col-lg-4 d-flex">
+                    <div class="card h-100 w-100">
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title mb-3 text-white">@r.Nombre</h5>
 
-                        <div class="resource-counter mb-3">
-                            <div class="resource-current" id="woodCurrent">11</div>
-                            <div class="resource-total">de <span id="woodTotal">87</span></div>
-                        </div>
+                            <div class="resource-counter mb-3">
+                                <div class="resource-current">@r.Cantidad</div>
+                                <div class="resource-total">
+                                    Meta:
+                                    @(
+                                        r.Nombre == Coopera.Models.Recurso.RecursosPartida.Madera ? Model.MetaMadera :
+                                        r.Nombre == Coopera.Models.Recurso.RecursosPartida.Piedra ? Model.MetaPiedra :
+                                        r.Nombre == Coopera.Models.Recurso.RecursosPartida.Comida ? Model.MetaComida :
+                                        0
+                                        )
+                                </div>
+                            </div>
 
-                        <p class="card-text muted small-note mb-4">Suma 1 por click.</p>
-                        <div class="mt-auto d-grid">
-                            <button id="btnWood" class="btn btn-primary btn-resource">
-                                +1 Madera
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column text-center">
-                        <h5 class="card-title mb-3 text-white">Piedra</h5>
-
-                        <div class="resource-counter mb-3">
-                            <div class="resource-current" id="stoneCurrent">1</div>
-                            <div class="resource-total">de <span id="stoneTotal">37</span></div>
-                        </div>
-
-                        <p class="card-text muted small-note mb-4">Suma 1 por click.</p>
-                        <div class="mt-auto d-grid">
-                            <button id="btnStone" class="btn btn-warning btn-resource">
-                                +1 Piedra
-                            </button>
+                            <p class="card-text muted small-note mb-4">Suma 1 por click.</p>
+                            <div class="mt-auto d-grid">
+                                <button class="btn btn-primary btn-resource" data-recurso="@r.Nombre">
+                                    +1 @r.Nombre
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-12 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column text-center">
-                        <h5 class="card-title mb-3 text-white">Comida</h5>
-
-                        <div class="resource-counter mb-3">
-                            <div class="resource-current" id="foodCurrent">11</div>
-                            <div class="resource-total">de <span id="foodTotal">90</span></div>
-                        </div>
-
-                        <p class="card-text muted small-note mb-4">Suma 1 por click.</p>
-                        <div class="mt-auto d-grid">
-                            <button id="btnFood" class="btn btn-success btn-resource">
-                                +1 Comida
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
+
     </main>
 
     <!-- Modal para cambiar nombre -->
@@ -218,74 +192,6 @@
             crossorigin="anonymous"></script>
 
     <!-- JavaScript personalizado -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // Referencias a elementos
-          const changeNameBtn = document.getElementById('changeNameBtn');
-          const changeNameModal = new bootstrap.Modal(document.getElementById('changeNameModal'));
-          const newPlayerNameInput = document.getElementById('newPlayerName');
-          const acceptNameChangeBtn = document.getElementById('acceptNameChange');
-          const playerNameDisplay = document.getElementById('playerNameDisplay');
-
-          // Abrir modal al hacer clic en "Cambiar nombre"
-          changeNameBtn.addEventListener('click', function() {
-            // Limpiar campo de entrada
-            newPlayerNameInput.value = '';
-            // Mostrar el modal
-            changeNameModal.show();
-            // Enfocar el campo de texto cuando se abre
-            setTimeout(() => {
-              newPlayerNameInput.focus();
-            }, 500);
-          });
-
-          // Manejar envío con botón "Aceptar"
-          acceptNameChangeBtn.addEventListener('click', function() {
-            const newName = newPlayerNameInput.value.trim();
-
-            if (newName === '') {
-              // Mostrar error si está vacío
-              newPlayerNameInput.classList.add('is-invalid');
-              return;
-            }
-
-            if (newName.length > 20) {
-              // Validar longitud máxima
-              newPlayerNameInput.classList.add('is-invalid');
-              return;
-            }
-
-            // Validar caracteres (solo letras, números y algunos especiales)
-            const validNamePattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_-]+$/;
-            if (!validNamePattern.test(newName)) {
-              newPlayerNameInput.classList.add('is-invalid');
-              return;
-            }
-
-            // Actualizar nombre mostrado
-            playerNameDisplay.innerHTML = `Jugador: <em>${newName}</em>`;
-
-            // Limpiar estado de error
-            newPlayerNameInput.classList.remove('is-invalid');
-
-            // Cerrar modal
-            changeNameModal.hide();
-          });
-
-          // Permitir envío con Enter
-          newPlayerNameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              acceptNameChangeBtn.click();
-            }
-          });
-
-          // Limpiar estado de error cuando se empieza a escribir
-          newPlayerNameInput.addEventListener('input', function() {
-            this.classList.remove('is-invalid');
-          });
-        });
-    </script>
-
+       
 </body>
 </html>

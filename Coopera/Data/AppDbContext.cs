@@ -14,7 +14,7 @@ namespace Coopera.Data
         public DbSet<Partida> Partidas { get; set; }
         public DbSet<Jugador> Jugadores { get; set; }
         public DbSet<MiniJuego> MiniJuegos { get; set; }
-        public DbSet<Recurso> Regursos { get; set; }
+        public DbSet<Recurso> Recursos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
