@@ -1,0 +1,29 @@
+Progreso Actual del Equipo
+
+✅ Escenario: Calcular metas para V1 (botones)
+    Dado que se inicia una nueva partida en V1
+    Cuando el sistema calcula las metas
+    Entonces para cada recurso (madera, piedra, comida) se genera un número aleatorio entre 0 y 1
+    Y se multiplica por el factor de dificultad 100
+    Y el resultado se redondea al entero más cercano
+    Y cada meta debe ser mínimo 10 y máximo 100
+
+Escenario: Calcular metas para V2 (minijuegos)
+  Dado que se inicia una nueva partida en V2
+  Cuando el sistema calcula las metas
+  Entonces para cada recurso se genera un número aleatorio entre 0 y 1
+  Y se multiplica por el factor de dificultad 10
+  Y el resultado se redondea al entero más cercano
+  Y cada meta debe ser mínimo 1 y máximo 10
+
+✅ Escenario: Persistir metas de la partida
+    Dado que se han calculado las metas de recursos
+    Cuando se almacenan en el sistema
+    Entonces las metas permanecen constantes durante toda la partida
+    Y se pueden consultar en cualquier momento
+
+Requerimientos técnicos:
+
+Usar un generador de números pseudoaleatorios con semilla basada en timestamp para reproducibilidad en testing (N)
+✅ Almacenar las metas en sesión o base de datos según la arquitectura elegida
+Validar que las metas generadas estén dentro de los rangos esperados (N)
