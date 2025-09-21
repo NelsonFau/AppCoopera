@@ -15,36 +15,59 @@ namespace Coopera.Controllers
         }
 
 
-        private int CalcularMeta(bool esV1)
+        private (int madera, int piedra, int comida) CalcularMetasTotales(bool esV1, int? seed = null, int totalMax = 100)
         {
-            Random rnd = new Random();
-            double aleatorio = rnd.NextDouble(); // 0..1
-            double factor = esV1 ? 100 : 10;
+            Random rnd = seed.HasValue ? new Random(seed.Value) : new Random();
 
-            int meta = (int)Math.Round(aleatorio * factor);
+            double r1 = rnd.NextDouble();
+            double r2 = rnd.NextDouble();
+            double r3 = rnd.NextDouble();
 
-            return esV1 ? Math.Clamp(meta, 10, 100) : Math.Clamp(meta, 1, 10);
+            double suma = r1 + r2 + r3;
+
+            int madera = (int)Math.Round((r1 / suma) * totalMax);
+            int piedra = (int)Math.Round((r2 / suma) * totalMax);
+            int comida = (int)Math.Round((r3 / suma) * totalMax);
+
+            int ajuste = (madera + piedra + comida) - totalMax;
+            if (ajuste > 0)
+            {
+                if (madera >= piedra && madera >= comida) madera -= ajuste;
+                else if (piedra >= madera && piedra >= comida) piedra -= ajuste;
+                else comida -= ajuste;
+            }
+
+            int min = esV1 ? 10 : 1;
+            int max = esV1 ? 100 : 10;
+            madera = Math.Clamp(madera, min, max);
+            piedra = Math.Clamp(piedra, min, max);
+            comida = Math.Clamp(comida, min, max);
+
+            return (madera, piedra, comida);
         }
+
 
         [HttpGet]
         public ActionResult Index(string version = "V1")
         {
             Partida? partida = _context.Partidas
-                                  .Include(p => p.Recursos)
-                                  .Where(p => p.Estado == Partida.EstadoPartida.jugando)
-                                  .OrderByDescending(p => p.Id)
-                                  .FirstOrDefault();
+                .Include(p => p.Recursos)
+                .Where(p => p.Estado == Partida.EstadoPartida.jugando)
+                .OrderByDescending(p => p.Id)
+                .FirstOrDefault();
 
             if (partida == null)
             {
                 bool esV1 = version == "V1";
 
+                var (metaMadera, metaPiedra, metaComida) = CalcularMetasTotales(esV1, seed: null, totalMax: 100);
+
                 Partida nuevaPartida = new Partida
                 {
                     Estado = Partida.EstadoPartida.jugando,
-                    MetaMadera = CalcularMeta(esV1),
-                    MetaPiedra = CalcularMeta(esV1),
-                    MetaComida = CalcularMeta(esV1)
+                    MetaMadera = metaMadera,
+                    MetaPiedra = metaPiedra,
+                    MetaComida = metaComida
                 };
 
                 _context.Partidas.Add(nuevaPartida);
@@ -53,9 +76,10 @@ namespace Coopera.Controllers
                 nuevaPartida.Recursos = new List<Recurso>
                 {
                     new Recurso { Nombre = Recurso.RecursosPartida.Madera, PartidaId = nuevaPartida.Id },
-                    new Recurso { Nombre = Recurso.RecursosPartida.Piedra, PartidaId = nuevaPartida.Id},
-                    new Recurso { Nombre = Recurso.RecursosPartida.Comida, PartidaId = nuevaPartida.Id}
+                    new Recurso { Nombre = Recurso.RecursosPartida.Piedra, PartidaId = nuevaPartida.Id },
+                    new Recurso { Nombre = Recurso.RecursosPartida.Comida, PartidaId = nuevaPartida.Id }
                 };
+
                 _context.Recursos.AddRange(nuevaPartida.Recursos);
                 _context.SaveChanges();
 
@@ -64,6 +88,7 @@ namespace Coopera.Controllers
 
             return View(partida);
         }
+
 
     }
 }
