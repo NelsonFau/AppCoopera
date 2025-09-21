@@ -19,6 +19,9 @@ namespace Coopera.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
+                    MetaMadera = table.Column<int>(type: "int", nullable: false),
+                    MetaPiedra = table.Column<int>(type: "int", nullable: false),
+                    MetaComida = table.Column<int>(type: "int", nullable: false),
                     HoraInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HoraFinal = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -48,20 +51,20 @@ namespace Coopera.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Regursos",
+                name: "Recursos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nombre = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     PartidaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Regursos", x => x.Id);
+                    table.PrimaryKey("PK_Recursos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Regursos_Partidas_PartidaId",
+                        name: "FK_Recursos_Partidas_PartidaId",
                         column: x => x.PartidaId,
                         principalTable: "Partidas",
                         principalColumn: "Id",
@@ -96,9 +99,9 @@ namespace Coopera.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MiniJuegos_Regursos_IdRecurso",
+                        name: "FK_MiniJuegos_Recursos_IdRecurso",
                         column: x => x.IdRecurso,
-                        principalTable: "Regursos",
+                        principalTable: "Recursos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -124,8 +127,8 @@ namespace Coopera.Migrations
                 column: "JugadorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Regursos_PartidaId",
-                table: "Regursos",
+                name: "IX_Recursos_PartidaId",
+                table: "Recursos",
                 column: "PartidaId");
         }
 
@@ -139,7 +142,7 @@ namespace Coopera.Migrations
                 name: "Jugadores");
 
             migrationBuilder.DropTable(
-                name: "Regursos");
+                name: "Recursos");
 
             migrationBuilder.DropTable(
                 name: "Partidas");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coopera.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250918230454_iniciandoMigracion")]
+    [Migration("20250921142234_iniciandoMigracion")]
     partial class iniciandoMigracion
     {
         /// <inheritdoc />
@@ -97,6 +97,15 @@ namespace Coopera.Migrations
                     b.Property<DateTime>("HoraInicio")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MetaComida")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetaMadera")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetaPiedra")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -117,8 +126,8 @@ namespace Coopera.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Nombre")
+                        .HasColumnType("int");
 
                     b.Property<int>("PartidaId")
                         .HasColumnType("int");
@@ -127,7 +136,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("PartidaId");
 
-                    b.ToTable("Regursos");
+                    b.ToTable("Recursos");
                 });
 
             modelBuilder.Entity("Coopera.Models.Jugador", b =>

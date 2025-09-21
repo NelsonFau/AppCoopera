@@ -40,7 +40,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("PartidaId");
 
-                    b.ToTable("Jugadores", (string)null);
+                    b.ToTable("Jugadores");
                 });
 
             modelBuilder.Entity("Coopera.Models.MiniJuego", b =>
@@ -74,7 +74,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("JugadorId");
 
-                    b.ToTable("MiniJuegos", (string)null);
+                    b.ToTable("MiniJuegos");
                 });
 
             modelBuilder.Entity("Coopera.Models.Partida", b =>
@@ -94,13 +94,22 @@ namespace Coopera.Migrations
                     b.Property<DateTime>("HoraInicio")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MetaComida")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetaMadera")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MetaPiedra")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Partidas", (string)null);
+                    b.ToTable("Partidas");
                 });
 
             modelBuilder.Entity("Coopera.Models.Recurso", b =>
@@ -114,8 +123,8 @@ namespace Coopera.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Nombre")
+                        .HasColumnType("int");
 
                     b.Property<int>("PartidaId")
                         .HasColumnType("int");
@@ -124,7 +133,7 @@ namespace Coopera.Migrations
 
                     b.HasIndex("PartidaId");
 
-                    b.ToTable("Regursos", (string)null);
+                    b.ToTable("Recursos");
                 });
 
             modelBuilder.Entity("Coopera.Models.Jugador", b =>
