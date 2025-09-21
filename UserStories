@@ -24,6 +24,6 @@ Escenario: Calcular metas para V2 (minijuegos)
 
 Requerimientos técnicos:
 
-Usar un generador de números pseudoaleatorios con semilla basada en timestamp para reproducibilidad en testing (N)
+✅ Usar un generador de números pseudoaleatorios con semilla basada en timestamp para reproducibilidad en testing 
 ✅ Almacenar las metas en sesión o base de datos según la arquitectura elegida
-Validar que las metas generadas estén dentro de los rangos esperados (N)
+✅ Validar que las metas generadas estén dentro de los rangos esperados 
